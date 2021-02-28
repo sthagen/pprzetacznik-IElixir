@@ -1,14 +1,14 @@
 defmodule IElixir.Mixfile do
   use Mix.Project
 
-  @version "0.9.18"
+  @version "0.9.21"
 
   def project do
     [app: :ielixir,
      version: @version,
      source_url: "https://github.com/pprzetacznik/IElixir",
      name: "IElixir",
-     elixir: ">= 1.5.0",
+     elixir: ">= 1.10.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      consolidate_protocols: false,
@@ -39,11 +39,11 @@ defmodule IElixir.Mixfile do
 
      # Docs dependencies
      {:earmark, "~> 1.3.2", only: :docs},
-     {:ex_doc, "~> 0.20", only: :docs},
-     {:inch_ex, "~> 0.5", only: :docs},
+     {:ex_doc, "~> 0.23", only: :docs, runtime: false},
+     {:inch_ex, "~> 2.0.0", only: :docs},
 
      # Test dependencies
-     {:excoveralls, "~> 0.8", only: :test}]
+     {:excoveralls, "~> 0.13.3", only: :test}]
   end
 
   defp package do

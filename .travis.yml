@@ -1,23 +1,12 @@
 language: elixir
-sudo: true
-matrix:
-  include:
-    - otp_release: 19.3
-      elixir: 1.5.1
-    - otp_release: 20.0
-      elixir: 1.5.1
-    - otp_release: 20.0
-      elixir: 1.5.2
-    - otp_release: 20.3
-      elixir: 1.6.0
-    - otp_release: 20.3
-      elixir: 1.6.6
-    - otp_release: 20.3
-      elixir: 1.7.4
-    - otp_release: 20.3
-      elixir: 1.8.2
-python:
-  - "2.7.10"
+dist: bionic
+elixir:
+  - "1.10.3"
+  - "1.11.2"
+otp_release: 23.0
+env:
+  - PYTHON_VERSION=`which python2.7`
+  - PYTHON_VERSION=`which python3.6`
 
 addons:
   apt:
@@ -26,16 +15,12 @@ addons:
       - libsqlite3-dev
 
 install:
-  - sudo pip install virtualenv virtualenvwrapper
-  - mkdir ~/.virtualenvs
-  - export WORKON_HOME=~/.virtualenvs
-  - source /usr/local/bin/virtualenvwrapper.sh
-  - mkvirtualenv test_ielixir
-  - workon test_ielixir
+  - pip install --user virtualenv
+  - virtualenv -p $PYTHON_VERSION ~/test_ielixir
+  - source ~/test_ielixir/bin/activate
   - pip install pip --upgrade
   - pip install tornado==4.5.3
   - pip install jupyter nose
-  - mix local.rebar --force
 before_script:
   - mix local.hex --force
   - mix local.rebar --force
