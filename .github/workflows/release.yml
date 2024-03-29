@@ -7,31 +7,11 @@ on:
 
 jobs:
   release:
-    name: Documentation and coverage reports
+    name: Create a release
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
     steps:
-    - uses: actions/checkout@v2
-    - name: Install prerequisites
-      run: |
-        sudo apt install -y libzmq3-dev libsqlite3-dev libssl-dev
-    - name: Set up Elixir
-      uses: actions/setup-elixir@v1
-      with:
-        elixir-version: '1.14'
-        otp-version: '26'
-    - name: Generate documentation
-      run: |
-        MIX_ENV=docs mix deps.get
-        MIX_ENV=docs mix compile
-        MIX_ENV=docs mix docs
-        MIX_ENV=docs mix inch.report
-        MIX_ENV=test mix coveralls.github
-        mix hex.config api_key $HEX_API_KEY
-        mix hex.publish package --yes
-        MIX_ENV=docs mix hex.publish docs
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
